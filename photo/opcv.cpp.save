@@ -1,0 +1,77 @@
+
+#include "opcv.h"
+#include <opencv2/opencv.hpp>  
+#include <iostream>  
+#include <stdio.h>
+ 
+
+int opcv::readx()
+{
+	using namespace cv;
+
+	int k = 1;
+	int x1 = -1;
+	int x2 = -1;
+	int sum1 = 0, sum2 = 0, count1 = 1, count2 = 1;
+	Mat image;
+	//image = imread("C:/Users/王彦庆/Desktop/b.jpg");
+	
+	VideoCapture capture(0);
+	capture >> image;
+	printf("%d\n", image.cols);
+	
+	for (int i = 0; i < image.rows; i++)
+	{
+		for (int j = 0; j < image.cols; j++)
+		{
+
+			uchar *data1 = image.ptr<uchar>(i, j);  // 获得像素值
+
+			if (data1[0] < 200 && data1[1] < 200 && data1[2] > 240)
+				//注意这里的012对应的是bgr，范围的意思是防止光线的明暗影响，可以适当放宽，另外你也可以选择其他的颜色空间，可以直接取消明暗影响，比如HSV
+			{
+				if (k == 1)
+				{
+					x1 = j;
+					k = 2;
+				}
+			}
+
+			if (data1[0] < 200 && data1[1] < 200 && data1[2] < 240)
+			{
+				if (k == 2)
+				{
+					x2 = (j - 1);
+					k = 3;
+				}
+				if (k == 3)
+				{
+					int x3 = (x1 + x2) / 2;
+					uchar *data2 = image.ptr<uchar>(i, x3);
+
+					if (data2[0] > 200 && data2[1] > 200 && data2[2] > 230)
+					{
+						sum1 += x3;
+						count1++;
+						printf("%d\t%d\t%d\n", x3, sum1, count1);
+					}
+					k = 1;
+					x1 = -1;
+					x2 = -1;
+				}
+			}
+			else {}
+		}
+		k = 1;
+		x1 = -1;
+		x2 = -1;
+
+	}
+	if(count1==1)	{return -1;}
+	else		{return sum1 / (count1-1);}
+}
+
+
+opcv::~opcv()
+{
+}

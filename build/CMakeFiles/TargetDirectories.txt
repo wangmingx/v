@@ -1,0 +1,6 @@
+/home/wmx/projects/v/build/CMakeFiles/rebuild_cache.dir
+/home/wmx/projects/v/build/CMakeFiles/edit_cache.dir
+/home/wmx/projects/v/build/CMakeFiles/v.dir
+/home/wmx/projects/v/build/photo/CMakeFiles/rebuild_cache.dir
+/home/wmx/projects/v/build/photo/CMakeFiles/edit_cache.dir
+/home/wmx/projects/v/build/photo/CMakeFiles/opcv.dir

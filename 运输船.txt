@@ -1,0 +1,10 @@
+#include "opcv.h"
+#include <stdio.h>
+
+int main()
+{
+	opcv x;
+	int y = x.readx();
+	printf("%d\n", y);
+    return 0;
+}
